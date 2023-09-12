@@ -1,0 +1,17 @@
+{
+  "name": "shrub-router",
+  "version": "1.0.0",
+  "description": "A minimal clientside router.",
+  "main": "shrub-router.js",
+  "repository": {
+    "type": "git",
+    "url": "https://git.sr.ht/~vladh/shrub-router.git"
+  },
+  "keywords": [
+    "js",
+    "router"
+  ],
+  "author": "Vlad-Stefan Harbuz <vlad@vladh.net>",
+  "license": "MIT",
+  "homepage": "https://git.sr.ht/~vladh/shrub-router#readme"
+}
