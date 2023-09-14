@@ -36,7 +36,7 @@ Shrub will simply make a request for the new page at the usual URL the user woul
 
 First, `npm install shrub-router`. You can then import and initialise it:
 
-```
+```javascript
 import ShrubRouter from 'shrub-router'
 ShrubRouter.init();
 ```
@@ -47,7 +47,7 @@ page.
 
 To add routes that replace the page body with the fetched page, use `ShrubRouter.add()`:
 
-```
+```javascript
 ShrubRouter.add('/');
 ShrubRouter.add('/about');
 ShrubRouter.add('/about/details');
@@ -55,7 +55,7 @@ ShrubRouter.add('/about/details');
 
 If you want to perform a custom action when a route is navigated to, specify a handler to replace the default one:
 
-```
+```javascript
 ShrubRouter.add('/contact', () => {
 	document.write("Hello world");
 });
@@ -69,7 +69,7 @@ placing your code at the bottom of your HTML. When using Shrub, you obviously wa
 initial page load, but also when a page is navigated to. Therefore, you should place all of your in-page Javascript code
 within an event listener for `shrub:loaded`:
 
-```
+```javascript
 window.addEventListener('shrub:loaded', () => {
 	PetiteVue.createApp({
 		name: 'Timmy',
