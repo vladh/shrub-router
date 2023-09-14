@@ -2,7 +2,6 @@
 
 let routes = [];
 let contentNodeName = 'main';
-let dynamicScriptContainerSelector = '.dynamic-scripts';
 
 function transformContent(html) {
     const openLoc = html.indexOf(`<${contentNodeName}`);
@@ -183,10 +182,6 @@ function interceptNavigation() {
 }
 
 function renderContent(content) {
-    const elDynamicScriptContainer = document.querySelector(
-        dynamicScriptContainerSelector);
-    elDynamicScriptContainer.innerHTML = '';
-
     const elTarget = document.querySelector(contentNodeName);
     elTarget.outerHTML = content;
     const elNew = document.querySelector(contentNodeName);
@@ -201,8 +196,7 @@ function renderContent(content) {
     elNew.querySelectorAll('script').forEach((el) => {
         const elNewScript = document.createElement('script');
         elNewScript.innerHTML = el.innerHTML;
-        el.remove();
-        elDynamicScriptContainer.appendChild(elNewScript);
+        el.replaceWith(elNewScript);
     });
 
     const elAutofocusTarget = elNew.querySelector('[autofocus]');
@@ -254,15 +248,14 @@ async function viewHandler({ route, path, method, data, routeParams }) {
     renderContent(transformContent(content));
 }
 
-function add(path, handler, options) {
+function add(path, handler) {
+    if (!handler) {
+        handler = viewHandler;
+    }
     if (routes.find(function(r) { return r.path === path; })) {
         throw new Error('Tried to add route, but one already exists with the same path');
     }
-    routes.push({ path, handler, options });
-}
-
-function addView(path, options) {
-    add(path, viewHandler, { ...options });
+    routes.push({ path, handler });
 }
 
 function remove(path) {
@@ -285,17 +278,7 @@ async function init() {
 }
 
 export default {
-    setContentNodeName(val) {
-        contentNodeName = val;
-    },
-    setDynamicScriptContainerSelector(val) {
-        dynamicScriptContainerSelector = val;
-    },
-    setTransformContent(val) {
-        transformContent = val;
-    },
     add,
-    addView,
     remove,
     init,
 };
